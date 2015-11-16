@@ -33,6 +33,30 @@
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>611</id>
+        <kind>6</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>disabled</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>false</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -53,7 +77,9 @@
             <kind>1</kind>
             <string>/// Draw the button
 
-draw_sprite(sprButton,0,x,y);
+var col = c_white;
+if self.disabled then col = c_ltgray;
+draw_sprite_ext(sprButton,0,x,y,image_xscale,image_yscale,image_angle,col,1);
 draw_set_font(fRegular);
 draw_set_color(c_black);
 draw_set_halign(fa_center);

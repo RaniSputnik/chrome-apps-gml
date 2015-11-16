@@ -41,23 +41,10 @@
             <kind>1</kind>
             <string>/// Initialize
 
+self.ev_consume = noone;
 self.sku = "test_product";
-var price = chrome_inapp_price(self.sku);
-var currency = chrome_inapp_price_currency(self.sku);
-
-// The price will be undefined if the product details
-// are still loading
-if not is_undefined(price)
-{
-    self.label = "Purchase for " + string(price) + " " + currency;
-}
-else
-{
-    self.label = "Purchase test product";
-}
-self.message = "";
+self.label = "Consume " + chrome_inapp_title(self.sku);
 self.error = "";
-self.ev_buy = noone;
 </string>
           </argument>
         </arguments>
@@ -80,19 +67,16 @@ self.ev_buy = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if chrome_has_result(self.ev_buy)
+            <string>if chrome_has_result(self.ev_consume)
 {
-    var error = chrome_get_result(self.ev_buy, "error");
+    var error = chrome_get_result(self.ev_consume, "error");
     if (error != "") 
     {
         self.error = error;
     }
-    else 
-    {
-        self.message = "Purchase successful!";
-    }
+    self.label = "Consume " + chrome_inapp_title(self.sku);
+    self.ev_consume = noone;
     self.disabled = false;
-    self.ev_buy = noone;
 }
 </string>
           </argument>
@@ -119,11 +103,11 @@ self.ev_buy = noone;
             <string>/// Start the purchase flow
 
 if self.disabled then exit;
-self.disabled = true;
 
-self.ev_buy = chrome_inapp_buy(self.sku);
+self.disabled = true;
+self.ev_consume = chrome_inapp_consume(self.sku);
 self.error = "";
-self.message = "";
+self.label = "Consuming...";
 </string>
           </argument>
         </arguments>
@@ -160,7 +144,7 @@ self.message = "";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw messages
+            <string>/// Draw errors
 
 draw_set_font(fRegular);
 draw_set_halign(fa_center);
@@ -173,12 +157,6 @@ if (self.error != "")
     draw_set_color(c_red);
     draw_text(xx,yy,self.error);
 }
-else if (self.message != "")
-{
-    draw_set_color(c_black);
-    draw_text(xx,yy,self.message);
-}
-
 
 </string>
           </argument>

@@ -219,6 +219,17 @@
             <arg>1</arg>
           </args>
         </function>
+        <function>
+          <name>chrome_inapp_consume</name>
+          <externalName>ChromeInAppConsume</externalName>
+          <kind>11</kind>
+          <help>chrome_inapp_consume(sku) ASYNC</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>

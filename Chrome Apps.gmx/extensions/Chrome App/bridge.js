@@ -333,7 +333,7 @@ function ChromeInAppBuy(sku){
 		'failure': function onPurchaseFail(response){
 			console.error("Purchase Failed",response);
 			var res = ChromeProvideResponse(ev);
-			res.error = "An unknown error occurred, check the console for more information";
+			res.error = "Purchase Failed, check the console for more information";
 			res.errorType = response.response.errorType;
 			// Try to make the error message more meaningful
 			switch (res.errorType) {
@@ -350,29 +350,54 @@ function ChromeInAppGetPurchases(){
 	google.payments.inapp.getPurchases({
 		'parameters': {'env': 'prod'},
 	  	'success': function onGetPurchases(response){
-	  		var res = ChromeProvideResponse(ev);
-	  		res.error = "";
-	  		res.skus = [];
 	  		console.log("Got purchases",response.response.details);
+	  		var res = ChromeProvideResponse(ev);
+	  		res.result = 1;
+	  		res.error = "";
+	  		// Set all the initial counts for each SKU to 0
+	  		for (var sku in INAPP_PRODUCTS) {
+	  			res[sku] = 0;
+	  		}
 	  		var purchases = response.response.details;
 	  		for (var i = 0, n = purchases.length; i < n; i++) {
 	  			var purchase = purchases[i];
+	  			if (!res.hasOwnProperty(purchase.sku)) {
+	  				res[purchase.sku] = 0;
+	  			}
 	  			if (purchase.state == "ACTIVE") {
-	  				if (!res.hasOwnProperty(purchase.sku)) {
-	  					res[purchase.sku] = 0;
-	  					res.skus.push(purchase.sku);
-	  				}
 	  				res[purchase.sku] += 1;
 	  			}
 	  		}
-	  		res.skus = res.skus.join(',');
 	  		res.response = JSON.stringify(response.response);
 	  	},
 	 	'failure': function onGetPurchasesFail(response){
-	 		var res = ChromeProvideResponse(ev);
 	 		console.error("Getting purchases failed",response);
-	 		res.error = "Failed to retrieve the in-app purchases, check the console for more information";
+	 		var res = ChromeProvideResponse(ev);
+	 		res.result = 0;
+	 		res.error = "Getting purchases failed, check the console for more information";
 	 	}
+	});
+	return ev;
+}
+
+// Consumes a product with the given SKU
+function ChromeInAppConsume(sku){
+	var ev = ChromeDeferResponse();
+	google.payments.inapp.consumePurchase({
+		'parameters': {'env': 'prod'},
+		'sku': sku,
+		'success': function onConsume(response){
+			console.log("Consumed product",sku,response);
+			var res = ChromeProvideResponse(ev);
+			res.result = 1;
+			res.error = "";
+		},
+		'failure': function onConsumeFail(response){
+			console.error("Failed to consume product",sku,response);
+			var res = ChromeProvideResponse(ev);
+			res.result = 0;
+			res.error = "Failed to consume product, check the console for more information";
+		}
 	});
 	return ev;
 }
