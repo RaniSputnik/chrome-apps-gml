@@ -52,6 +52,9 @@ function xhrWithAuth(method, url, interactive, callback) {
 // expect
 // ===========================================
 
+// TODO allow requests to be cancelled to ensure that
+// when you change rooms you can cleanup outstanding requests
+
 // Returns whether or not the game is currently being run as a chrome app
 function ChromeIsApp()
 {
@@ -82,7 +85,7 @@ function ChromeDeferResponse()
 // Create a response for the given deferred event
 function ChromeProvideResponse(ev)
 {
-	var e = (EVENT_POOL.length > 0)? EVENT_POOL.pop() : {};
+	var e = EVENT_POOL.pop() || {};
 	EVENT_RESULTS[ev] = e;
 	return e;
 }
@@ -241,22 +244,24 @@ function ChromeLicenseLoad(interactive) {
 // ===========================================
 
 // Purchases an in-app product with the give SKU
+// Note! If the sku is incorrect you will simply see
+// a blank window appear - no item will be shown
 function GooglePaymentsInAppBuy(sku){
 	var ev = ChromeDeferResponse();
 	google.payments.inapp.buy({
 		'parameters': {'env': 'prod'},
 		'sku': sku,
-		'success': function onPurchase(reponse){
+		'success': function onPurchase(response){
 			console.log("Purchase success",arguments);
 			var res = ChromeProvideResponse(ev);
 			res.error = "";
 			res.errorType = "";
-			res.jwt = reponse.jwt;
-			res.cartId = reponse.request.cartId;
-			res.orderId = reponse.response.orderId;
+			res.jwt = response.jwt;
+			res.cartId = response.request.cartId;
+			res.orderId = response.response.orderId;
 		},
-		'failure': function onPurchaseFail(reponse){
-			console.error("Purchase Failed",reponse);
+		'failure': function onPurchaseFail(response){
+			console.error("Purchase Failed",response);
 			var res = ChromeProvideResponse(ev);
 			res.error = "An unknown error occurred, check the console for more information";
 			res.errorType = response.response.errorType;
@@ -268,3 +273,4 @@ function GooglePaymentsInAppBuy(sku){
 	});
 	return ev;
 }
+

@@ -8,17 +8,23 @@
     <extension index="0">extensions\Chrome App</extension>
   </NewExtensions>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprite>sprites\sprButton</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <fonts name="fonts">
     <font>fonts\fRegular</font>
   </fonts>
   <objects name="objects">
+    <object>objects\oTestNavigator</object>
     <object>objects\oTester</object>
+    <object>objects\oButton</object>
+    <object>objects\oButtonBuy</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmTest</room>
+    <room>rooms\rmTestPayments</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
