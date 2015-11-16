@@ -162,6 +162,21 @@
           <value>"NONE"</value>
           <hidden>0</hidden>
         </constant>
+        <constant>
+          <name>cpa_update_available</name>
+          <value>"update_available"</value>
+          <hidden>0</hidden>
+        </constant>
+        <constant>
+          <name>cpa_update_none</name>
+          <value>"no_update"</value>
+          <hidden>0</hidden>
+        </constant>
+        <constant>
+          <name>cpa_update_throttled</name>
+          <value>"throttled"</value>
+          <hidden>0</hidden>
+        </constant>
       </constants>
     </file>
   </files>
