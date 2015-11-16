@@ -234,3 +234,37 @@ function ChromeLicenseLoad(interactive) {
 	});
 	return ev;
 }
+
+// ===========================================
+// In-App Payments API
+// https://developer.chrome.com/webstore/payments-iap
+// ===========================================
+
+// Purchases an in-app product with the give SKU
+function GooglePaymentsInAppBuy(sku){
+	var ev = ChromeDeferResponse();
+	google.payments.inapp.buy({
+		'parameters': {'env': 'prod'},
+		'sku': sku,
+		'success': function onPurchase(reponse){
+			console.log("Purchase success",arguments);
+			var res = ChromeProvideResponse(ev);
+			res.error = "";
+			res.errorType = "";
+			res.jwt = reponse.jwt;
+			res.cartId = reponse.request.cartId;
+			res.orderId = reponse.response.orderId;
+		},
+		'failure': function onPurchaseFail(reponse){
+			console.error("Purchase Failed",reponse);
+			var res = ChromeProvideResponse(ev);
+			res.error = "An unknown error occurred, check the console for more information";
+			res.errorType = response.response.errorType;
+			// Try to make the error message more meaningful
+			switch (res.errorType) {
+				case "PURCHASE_CANCELED": res.error = "Purchase was cancelled by user"; break;
+			}
+		}
+	});
+	return ev;
+}

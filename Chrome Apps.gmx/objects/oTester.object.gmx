@@ -37,6 +37,8 @@ if chrome_is_app()
     self.ev_langs = chrome_i18n_get_accepted_languages();
 }
 
+var sku = "test_product";
+chrome_inapp_buy(sku);
 </string>
           </argument>
         </arguments>

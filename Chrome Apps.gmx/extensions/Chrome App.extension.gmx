@@ -135,6 +135,17 @@
           <argCount>0</argCount>
           <args/>
         </function>
+        <function>
+          <name>chrome_inapp_buy</name>
+          <externalName>GooglePaymentsInAppBuy</externalName>
+          <kind>11</kind>
+          <help>chrome_inapp_buy(sku)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>
