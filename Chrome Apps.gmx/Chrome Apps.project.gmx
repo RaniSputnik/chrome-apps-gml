@@ -21,6 +21,7 @@
     <object>objects\oTester</object>
     <object>objects\oButton</object>
     <object>objects\oButtonBuy</object>
+    <object>objects\oDisplayProductCount</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmTest</room>

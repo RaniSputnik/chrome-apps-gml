@@ -4,7 +4,7 @@
 g("google.payments.inapp.consumePurchase",function(a){a.method="consumePurchase";h(a)});g("google.payments.inapp.getPurchases",function(a){a.method="getPurchases";h(a)});g("google.payments.inapp.getSkuDetails",function(a){a.method="getSkuDetails";h(a)}); })();
 // ===========================================
 // xhrWithAuth - Helper Util for making authenticated XHRs
-function xhrWithAuth(method, url, interactive, callback) {
+function xhrWithAuth(method, url, interactive, callback){
 	var retry = true;
 	getToken();
 
@@ -246,6 +246,10 @@ function ChromeLicenseLoad(interactive) {
 // Purchases an in-app product with the give SKU
 // Note! If the sku is incorrect you will simply see
 // a blank window appear - no item will be shown
+// Note! If you get "In-App Payments is Currently Unavailable"
+// it's likely you are trying to re-purchase an already
+// purchased product - make sure to consume any products
+// that should be re-purchased
 function GooglePaymentsInAppBuy(sku){
 	var ev = ChromeDeferResponse();
 	google.payments.inapp.buy({
@@ -274,3 +278,35 @@ function GooglePaymentsInAppBuy(sku){
 	return ev;
 }
 
+// Gets all of the current users previous purchases
+function ChromeInAppGetPurchases(){
+	var ev = ChromeDeferResponse();
+	google.payments.inapp.getPurchases({
+		'parameters': {'env': 'prod'},
+	  	'success': function onGetPurchases(response){
+	  		var res = ChromeProvideResponse(ev);
+	  		res.error = "";
+	  		res.skus = [];
+	  		console.log("Got purchases",response.response.details);
+	  		var purchases = response.response.details;
+	  		for (var i = 0, n = purchases.length; i < n; i++) {
+	  			var purchase = purchases[i];
+	  			if (purchase.state == "ACTIVE") {
+	  				if (!res.hasOwnProperty(purchase.sku)) {
+	  					res[purchase.sku] = 0;
+	  					res.skus.push(purchase.sku);
+	  				}
+	  				res[purchase.sku] += 1;
+	  			}
+	  		}
+	  		res.skus = res.skus.join(',');
+	  		res.response = JSON.stringify(response.response);
+	  	},
+	 	'failure': function onGetPurchasesFail(response){
+	 		var res = ChromeProvideResponse(ev);
+	 		console.error("Getting purchases failed",response);
+	 		res.error = "Failed to retrieve the in-app purchases, check the console for more information";
+	 	}
+	});
+	return ev;
+}
