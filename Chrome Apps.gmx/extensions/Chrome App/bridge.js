@@ -243,6 +243,71 @@ function ChromeLicenseLoad(interactive) {
 // https://developer.chrome.com/webstore/payments-iap
 // ===========================================
 
+var INAPP_PRODUCTS;
+
+// Gets all of the available products
+function ChromeInAppGetProducts(){
+	var ev = ChromeDeferResponse();
+	google.payments.inapp.getSkuDetails({
+		'parameters': {'env': 'prod'},
+		'success': function onSkuDetails(response){
+			console.log("Got In-App Products", response.response);
+			var res = ChromeProvideResponse(ev);
+			res.error = "";
+			res.response = JSON.stringify(response.response);
+			INAPP_PRODUCTS = {};
+			var list = response.response.details.inAppProducts
+			for (var i = 0, n = list.length; i < n; i++) {
+				var product = list[i];
+				INAPP_PRODUCTS[product.sku] = product;
+			}
+		},
+		'failure': function onSkuDetailsFail(repsonse){
+			console.error("Getting In-App Products failed", response);
+			var res = ChromeProvideResponse(ev);
+			res.error = "An unknown error occurred, check the console for more information";
+		}
+	});
+	return ev;
+}
+// Make sure to load on start-up
+ChromeInAppGetProducts();
+
+// Gets the title of a product with the given SKU
+function ChromeInAppTitle(sku){
+	if (INAPP_PRODUCTS.hasOwnProperty(sku)) {
+		return INAPP_PRODUCTS[sku].localeData[0].title;
+	}
+}
+
+// Gets the description of a product with the given SKU
+function ChromeInAppDescription(sku){
+	if (INAPP_PRODUCTS.hasOwnProperty(sku)) {
+		return INAPP_PRODUCTS[sku].localeData[0].description;
+	}
+}
+
+// Gets the price of a product with the given SKU
+function ChromeInAppPrice(sku){
+	if (INAPP_PRODUCTS.hasOwnProperty(sku)) {
+		return INAPP_PRODUCTS[sku].prices[0].valueMicros / 1000000;
+	}
+}
+
+// Returns the currency code of a given in-app product
+function ChromeInAppPriceCurrency(sku){
+	if (INAPP_PRODUCTS.hasOwnProperty(sku)) {
+		return INAPP_PRODUCTS[sku].prices[0].currencyCode;
+	}
+}
+
+// Gets the region code for the price of a given in-app product
+function ChromeInAppPriceRegion(sku){
+	if (INAPP_PRODUCTS.hasOwnProperty(sku)) {
+		return INAPP_PRODUCTS[sku].prices[0].currencyCode;
+	}
+}
+
 // Purchases an in-app product with the give SKU
 // Note! If the sku is incorrect you will simply see
 // a blank window appear - no item will be shown
@@ -250,7 +315,7 @@ function ChromeLicenseLoad(interactive) {
 // it's likely you are trying to re-purchase an already
 // purchased product - make sure to consume any products
 // that should be re-purchased
-function GooglePaymentsInAppBuy(sku){
+function ChromeInAppBuy(sku){
 	var ev = ChromeDeferResponse();
 	google.payments.inapp.buy({
 		'parameters': {'env': 'prod'},
@@ -263,6 +328,7 @@ function GooglePaymentsInAppBuy(sku){
 			res.jwt = response.jwt;
 			res.cartId = response.request.cartId;
 			res.orderId = response.response.orderId;
+			res.response = JSON.stringify(response.response);
 		},
 		'failure': function onPurchaseFail(response){
 			console.error("Purchase Failed",response);

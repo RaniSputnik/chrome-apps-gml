@@ -41,7 +41,20 @@
             <kind>1</kind>
             <string>/// Initialize
 
-self.label = "Chrome In-App Buy";
+self.sku = "test_product";
+var price = chrome_inapp_price(self.sku);
+var currency = chrome_inapp_price_currency(self.sku);
+
+// The price will be undefined if the product details
+// are still loading
+if not is_undefined(price)
+{
+    self.label = "Purchase for " + string(price) + " " + currency;
+}
+else
+{
+    self.label = "Purchase test product";
+}
 self.message = "";
 self.error = "";
 </string>
@@ -102,8 +115,7 @@ self.error = "";
             <kind>1</kind>
             <string>/// Start the purchase flow
 
-var sku = "test_product";
-self.ev_buy = chrome_inapp_buy(sku);
+self.ev_buy = chrome_inapp_buy(self.sku);
 
 self.error = "";
 self.message = "";

@@ -29,6 +29,8 @@
 
 self.sku = "test_product";
 self.ev_purchases = chrome_inapp_get_purchases();
+self.title = chrome_inapp_title(self.sku);
+self.description = chrome_inapp_description(self.sku);
 self.num = -1;
 </string>
           </argument>
@@ -55,7 +57,6 @@ self.num = -1;
             <string>if chrome_has_result(self.ev_purchases)
 {   
     self.num = chrome_get_result(self.ev_purchases, self.sku);
-    show_message_async("Purchases received: num="+string(self.num));
 }
 </string>
           </argument>
@@ -82,18 +83,21 @@ self.num = -1;
             <string>/// Draw the product count
 
 draw_set_color(c_black);
-draw_set_halign(fa_center);
-draw_set_valign(fa_middle);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
 draw_set_font(fRegular);
 
+var xx = x - 128;
 if self.num &gt;= 0
 {
-    draw_text(x,y,"Product Count (SKU="+string(self.sku)+"): "+string(self.num)); 
+    draw_text(xx,y,"Product Count (SKU="+string(self.sku)+"): "+string(self.num)); 
 }
 else
 {
-    draw_text(x,y,"Getting purchase details...");
+    draw_text(xx,y,"Getting purchase details...");
 }
+draw_text(xx,y,"#"+string(self.title));
+draw_text_ext(xx,y,"##"+string(self.description),-1,256);
 </string>
           </argument>
         </arguments>
