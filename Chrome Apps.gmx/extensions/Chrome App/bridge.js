@@ -4,8 +4,44 @@
 g("google.payments.inapp.consumePurchase",function(a){a.method="consumePurchase";h(a)});g("google.payments.inapp.getPurchases",function(a){a.method="getPurchases";h(a)});g("google.payments.inapp.getSkuDetails",function(a){a.method="getSkuDetails";h(a)}); })();
 // ===========================================
 // xhrWithAuth - Helper Util for making authenticated XHRs
-window.xhrWithAuth=function(f,g,c,b){function d(){console.log("Calling chrome.identity.getAuthToken",c);chrome.a?chrome.a.b({c:c},function(a){chrome.runtime.lastError?b(chrome.runtime.lastError.message):(a||b("Failed to get auth token"),console.log("chrome.identity.getAuthToken returned a token",a),access_token=a,console.log("Starting authenticated XHR..."),a=new XMLHttpRequest,a.open(f,g),a.setRequestHeader("Authorization","Bearer "+access_token),a.onload=h,a.send())}):b("Missing 'identity' permission in manifest")}
-function h(){401==this.status&&e?(e=!1,chrome.a.f({g:access_token},d)):b(null,this.status,this.response)}var e=!0;d()};
+function xhrWithAuth(method, url, interactive, callback) {
+	var retry = true;
+	getToken();
+
+	function getToken() {
+		console.log("Calling chrome.identity.getAuthToken", interactive);
+		if (chrome.identity) {
+			chrome.identity.getAuthToken({ interactive: interactive }, function(token) {
+				if (chrome.runtime.lastError) {
+					callback(chrome.runtime.lastError.message);
+					return;
+				}
+				console.log("chrome.identity.getAuthToken returned a token", token);
+				access_token = token;
+				requestStart();
+			});
+		} else {
+			callback("Missing 'identity' permission in manifest");
+		}
+	}
+
+	function requestStart() {
+		var xhr = new XMLHttpRequest();
+		xhr.open(method, url);
+		xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+		xhr.onload = requestComplete;
+		xhr.send();
+	}
+
+	function requestComplete() {
+		if (this.status == 401 && retry) {
+			retry = false;
+			chrome.identity.removeCachedAuthToken({ token: access_token }, getToken);
+		} else {
+			callback(null, this.status, this.response);
+		}
+	}
+}
 // ===========================================
 
 // ===========================================
@@ -171,6 +207,7 @@ function ChromeLicenseLoad(interactive) {
 		res.result = false;
 		res.error = "";
 		res.createdTime = 0;
+		res.accessLevel = "NONE";
 
 		if (error != null) {
 			res.error = error;
@@ -180,15 +217,15 @@ function ChromeLicenseLoad(interactive) {
 				console.log('Received response from license server', error, status, response);
 				try {
 					response = JSON.parse(response);
-					res.result = response.result? 1 : 0;
-					if (res.createdTime) {
-						res.createdTime = response.createdTime;
-					}
-					if (res.accessLevel) {
-						res.accessLevel = response.accessLevel;
-					}
 				} catch(e) {
-					res.error = "Invalid response from license server";
+					return res.error = "Invalid response from license server";
+				}
+				res.result = response.result? 1 : 0;
+				if (response.createdTime) {
+					res.createdTime = response.createdTime;
+				}
+				if (response.accessLevel) {
+					res.accessLevel = response.accessLevel;
 				}
 			} else {
 				res.error = "License request got a " + status + " response";
