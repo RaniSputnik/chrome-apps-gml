@@ -165,7 +165,7 @@ var is_app = chrome_is_app();
 draw_text(16,16,"Chrome is App: "+string(is_app));
 if is_app
 {
-    draw_text(16,16,"#Extension id: "+chrome_i18n_get_message(msg_extension_id));   
+    draw_text(16,16,"#Extension id: "+chrome_i18n_get_message(cpa_msg_extension_id));   
 }
 </string>
           </argument>

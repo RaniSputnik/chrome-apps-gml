@@ -3,7 +3,7 @@
   <name>Chrome App</name>
   <version>0.1.0</version>
   <packageID></packageID>
-  <ProductID>ACBD3CFF4E539AD869A0E8E3B4B022DD</ProductID>
+  <ProductID></ProductID>
   <date>15/11/15</date>
   <license>Free to use, also for commercial games.</license>
   <description></description>
@@ -138,13 +138,28 @@
       </functions>
       <constants>
         <constant>
-          <name>msg_extension_id</name>
+          <name>cpa_msg_extension_id</name>
           <value>"@@extension_id"</value>
           <hidden>0</hidden>
         </constant>
         <constant>
-          <name>msg_ui_locale</name>
+          <name>cpa_msg_ui_locale</name>
           <value>"@@ui_locale"</value>
+          <hidden>0</hidden>
+        </constant>
+        <constant>
+          <name>cpa_license_free_trial</name>
+          <value>"FREE_TRIAL"</value>
+          <hidden>0</hidden>
+        </constant>
+        <constant>
+          <name>cpa_license_full</name>
+          <value>"FULL"</value>
+          <hidden>0</hidden>
+        </constant>
+        <constant>
+          <name>cpa_license_none</name>
+          <value>"NONE"</value>
           <hidden>0</hidden>
         </constant>
       </constants>
