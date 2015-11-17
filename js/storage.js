@@ -18,8 +18,6 @@ var AREA = '';
 // An array we share to avoid creating extra garbage
 var SHARED_ARRAY = [];
 
-// TODO stub window.localStorage to prevent error messages
-
 // TODO add an event for storage.onChanged
 
 module.exports = {
