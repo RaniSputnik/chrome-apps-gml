@@ -31,6 +31,7 @@ w.ChromeStorageSet = e.storage.set;
 w.ChromeStorageSave = e.storage.save;
 w.ChromeStorageRemove = e.storage.remove;
 w.ChromeStorageClear = e.storage.clear;
+w.ChromeStorageOnChanged = e.storage.onChanged;
 w.ChromeI18nGetMessage = e.i18n.getMessage;
 w.ChromeI18nGetAcceptedLanguages = e.i18n.getAcceptedLanguages;
 w.ChromeI18nGetUILanguage = e.i18n.getUILanguage;

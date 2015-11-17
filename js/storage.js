@@ -18,7 +18,8 @@ var AREA = '';
 // An array we share to avoid creating extra garbage
 var SHARED_ARRAY = [];
 
-// TODO add an event for storage.onChanged
+// The event id for the onChanged event
+var ON_CHANGED_EVENT = 0;
 
 module.exports = {
 
@@ -131,6 +132,24 @@ module.exports = {
 			});
 		}
 		return ev;
+	},
+
+	// Returns a handle for the on-changed event
+	onChanged: function(){
+		console.log("On Changed");
+		if (ON_CHANGED_EVENT == 0 && chrome.storage) {
+			console.log("Adding storage onchanged listener");
+			ON_CHANGED_EVENT = async.deferResponse();
+			chrome.storage.onChanged.addListener(function onChanged(changes, area){
+				console.log("Storage changed",changes,area);
+				var res = async.provideResponse(ON_CHANGED_EVENT);
+				res.area = area;
+				for (var key in changes) {
+					res[key] = changes[key].newValue;
+				}
+			});
+		}
+		return ON_CHANGED_EVENT;
 	}
 };
 

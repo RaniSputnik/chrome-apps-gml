@@ -28,6 +28,7 @@
             <string>/// Initialize
 
 self.ev_loading = chrome_storage_get(cpa_storage_sync,"myFirstValue","mySecondValue");
+self.ev_changed = chrome_storage_on_changed();
 
 self.firstValue = undefined;
 self.secondValue = undefined;
@@ -62,6 +63,38 @@ if chrome_has_result(self.ev_loading)
     self.firstValue = chrome_get_result(self.ev_loading,"myFirstValue");
     self.secondValue = chrome_get_result(self.ev_loading,"mySecondValue");
     self.ev_loading = noone;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// On change handle updates
+
+if chrome_has_result(self.ev_changed) {
+    var area = chrome_get_result(self.ev_changed,"area");
+    if (area == cpa_storage_sync) {
+        show_debug_message("Storage changed");
+        var fv = chrome_get_result(self.ev_changed,"myFirstValue");
+        var sv = chrome_get_result(self.ev_changed,"mySecondValue");
+        if not is_undefined(fv) then self.firstValue = fv;
+        if not is_undefined(sv) then self.secondValue = sv;
+    }
 }
 </string>
           </argument>
