@@ -230,6 +230,67 @@
             <arg>1</arg>
           </args>
         </function>
+        <function>
+          <name>chrome_storage_get</name>
+          <externalName>ChromeStorageGet</externalName>
+          <kind>11</kind>
+          <help>chrome_storage_get(area,keys...) ASYNC</help>
+          <returnType>2</returnType>
+          <argCount>-1</argCount>
+          <args/>
+        </function>
+        <function>
+          <name>chrome_storage_begin</name>
+          <externalName>ChromeStorageBegin</externalName>
+          <kind>11</kind>
+          <help>chrome_storage_begin(area)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_storage_set</name>
+          <externalName>ChromeStorageSet</externalName>
+          <kind>11</kind>
+          <help>chrome_storage_set(key,value)</help>
+          <returnType>2</returnType>
+          <argCount>2</argCount>
+          <args>
+            <arg>1</arg>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_storage_save</name>
+          <externalName>ChromeStorageSave</externalName>
+          <kind>11</kind>
+          <help>chrome_storage_save() ASYNC</help>
+          <returnType>2</returnType>
+          <argCount>0</argCount>
+          <args/>
+        </function>
+        <function>
+          <name>chrome_storage_remove</name>
+          <externalName>ChromeStorageRemove</externalName>
+          <kind>11</kind>
+          <help>chrome_storage_remove(area,keys...) ASYNC</help>
+          <returnType>2</returnType>
+          <argCount>0</argCount>
+          <args/>
+        </function>
+        <function>
+          <name>chrome_storage_clear</name>
+          <externalName>ChromeStorageClear</externalName>
+          <kind>11</kind>
+          <help>chrome_storage_clear(area) ASYNC</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>
@@ -270,6 +331,21 @@
         <constant>
           <name>cpa_update_throttled</name>
           <value>"throttled"</value>
+          <hidden>0</hidden>
+        </constant>
+        <constant>
+          <name>cpa_storage_sync</name>
+          <value>"sync"</value>
+          <hidden>0</hidden>
+        </constant>
+        <constant>
+          <name>cpa_storage_local</name>
+          <value>"local"</value>
+          <hidden>0</hidden>
+        </constant>
+        <constant>
+          <name>cpa_storage_managed</name>
+          <value>"managed"</value>
           <hidden>0</hidden>
         </constant>
       </constants>

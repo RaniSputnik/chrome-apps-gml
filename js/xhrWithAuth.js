@@ -1,6 +1,9 @@
 // xhrWithAuth - Helper Util for making authenticated XHRs
+
 module.exports = function(method, url, interactive, callback){
 	var retry = true;
+	var access_token = null;
+	
 	getToken();
 
 	function getToken() {

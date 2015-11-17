@@ -10,6 +10,7 @@ var e = {
 	async: require('./async'),
 	util: require('./utils'),
 	runtime: require('./runtime'),
+	storage: require('./storage'),
 	i18n: require('./i18n'),
 	license: require('./license'),
 	inapp: require('./inapp')
@@ -24,6 +25,12 @@ w.ChromeGetResult = e.async.getResult;
 w.ChromeRuntimeGetManifest = e.runtime.getManifest;
 w.ChromeRuntimeRequestUpdateCheck = e.runtime.requestUpdateCheck;
 w.ChromeRuntimeReload = e.runtime.reload;
+w.ChromeStorageGet = e.storage.get;
+w.ChromeStorageBegin = e.storage.begin;
+w.ChromeStorageSet = e.storage.set;
+w.ChromeStorageSave = e.storage.save;
+w.ChromeStorageRemove = e.storage.remove;
+w.ChromeStorageClear = e.storage.clear;
 w.ChromeI18nGetMessage = e.i18n.getMessage;
 w.ChromeI18nGetAcceptedLanguages = e.i18n.getAcceptedLanguages;
 w.ChromeI18nGetUILanguage = e.i18n.getUILanguage;

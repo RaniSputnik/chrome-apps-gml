@@ -23,9 +23,13 @@
     <object>objects\oButtonBuy</object>
     <object>objects\oButtonConsume</object>
     <object>objects\oDisplayProductCount</object>
+    <object>objects\oTestStorage</object>
+    <object>objects\oButtonStorageRandomize</object>
+    <object>objects\oButtonStorageSave</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmTest</room>
+    <room>rooms\rmTestStorage</room>
     <room>rooms\rmTestPayments</room>
   </rooms>
   <help>
