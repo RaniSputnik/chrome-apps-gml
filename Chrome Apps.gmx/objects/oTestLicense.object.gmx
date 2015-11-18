@@ -25,9 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Try to sneakily load the license
+            <string>/// Try to load the license information
 
-self.ev_license = chrome_license_load(false);
+// First we try to load the license info without
+// user interaction. If that fails, then we allow
+// them to manually check the license.
+self.interactive = false;
+
+self.ev_license = chrome_license_load(self.interactive);
 self.license_info = "Loading license info...";
 </string>
           </argument>
@@ -51,24 +56,26 @@ self.license_info = "Loading license info...";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if chrome_has_result(self.ev_license)
+            <string>/// Check for license info
+
+if chrome_has_result(self.ev_license)
 {
-    var error = chrome_get_result(self.ev_license, "error");
-    if error != ""
+    var e = chrome_get_result(self.ev_license, "error");
+    if e != ""
     {
         if self.interactive
         {
             // If we are interactive, then the user should have been asked
             // for permission - if that fails we know for sure something has
             // gone wrong.
-            self.error = error;
+            self.license_info = e;
         }
         else
         {
             // If we aren't interactive then the error is likely that we
             // just need to ask the user for permission. Because that isn't
             // really an error, we just say we need users permission.
-            self.license_info = "You must give the app permission to check for payment.";
+            self.license_info = "You must give the app permission to check your license.";
         }
     }
     else

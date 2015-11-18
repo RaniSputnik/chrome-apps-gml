@@ -34,6 +34,7 @@ module.exports = {
 			res.accessLevel = "NONE";
 
 			if (error != null) {
+				console.error('License check failed',error);
 				res.error = error;
 			}
 			else {

@@ -32,6 +32,7 @@
     </objects>
     <objects name="License">
       <object>objects\oTestLicense</object>
+      <object>objects\oButtonCheckLicense</object>
     </objects>
     <objects name="Products">
       <object>objects\oTestProducts</object>
