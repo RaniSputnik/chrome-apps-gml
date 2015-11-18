@@ -33,7 +33,7 @@
       <uncompress>0</uncompress>
       <ConfigOptions>
         <Config name="Default">
-          <CopyToMask>32</CopyToMask>
+          <CopyToMask>17593242063086</CopyToMask>
         </Config>
       </ConfigOptions>
       <ProxyFiles/>

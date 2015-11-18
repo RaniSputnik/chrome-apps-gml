@@ -21,6 +21,10 @@
     <object>objects\oTestNavigator</object>
     <object>objects\oButton</object>
     <object>objects\oTester</object>
+    <objects name="Runtime">
+      <object>objects\oTestRuntime</object>
+      <object>objects\oButtonReload</object>
+    </objects>
     <objects name="Storage">
       <object>objects\oTestStorage</object>
       <object>objects\oButtonStorageRandomize</object>
@@ -33,9 +37,14 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rmRuntime</room>
     <room>rooms\rmStorage</room>
     <room>rooms\rmProducts</room>
   </rooms>
+  <constants number="2">
+    <constant name="NEAR_BLACK">$212121</constant>
+    <constant name="HIGHLIGHT_BLUE">$F39621</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

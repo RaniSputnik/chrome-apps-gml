@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,22 +25,30 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Gather all the rooms
+            <string>/// Test out some basic information
 
-self.room_count = 0;
-var next = room;
-while room_exists(next) {
-    self.rooms[self.room_count++] = next;
-    next = room_next(next);
+// Get whether or not we are a chrome app
+global.is_chrome_app = chrome_is_app();
+
+global.manifest = noone;
+self.updates_available = "Checking for updates...";
+self.ev_update_check = noone;
+
+if (global.is_chrome_app)
+{
+    // Load the manifest (if there is one)
+    global.manifest = json_decode(chrome_runtime_get_manifest());
+    // Check for updates
+    self.ev_update_check = chrome_runtime_request_update_check();
 }
 
-self.gap = room_width / self.room_count;
+
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="56">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -57,12 +65,25 @@ self.gap = room_width / self.room_count;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Change rooms
+            <string>/// Handle update response
 
-if mouse_y &lt; 48
+if chrome_has_result(self.ev_update_check)
 {
-    var rm_index = floor(mouse_x / self.gap);
-    room_goto(self.rooms[rm_index]);
+    var status = chrome_get_result(self.ev_update_check,"status");
+    var version = chrome_get_result(self.ev_update_check,"version");
+    
+    if status == cpa_update_available
+    {
+        self.updates_available = "New version available: "+string(version);
+    }
+    else if status == cpa_update_none
+    {
+        self.updates_available = "Version up to date";
+    }
+    else if status == cpa_update_throttled
+    {
+        self.updates_available = "Version check was throttled";
+    }
 }
 </string>
           </argument>
@@ -86,93 +107,29 @@ if mouse_y &lt; 48
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw the rooms across the top bar
+            <string>/// Draw the basic app info
 
-draw_set_halign(fa_center);
-draw_set_valign(fa_middle);
-draw_set_font(fRooms);
+var xx = x - 128;
+draw_set_color(NEAR_BLACK);
+draw_set_font(fRegular);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
 
-var xx = self.gap &gt;&gt; 1;
+draw_text(xx,y,"Is Chrome App: "+string(global.is_chrome_app));
 
-for (var i = 0; i &lt; self.room_count; i++) 
+if global.is_chrome_app
 {
-    var rm = self.rooms[i];
-    if (rm == room) 
-    {
-        draw_set_color(HIGHLIGHT_BLUE);
-    }
-    else
-    {
-        draw_set_color(NEAR_BLACK);
-    }
-    draw_text(xx,16,room_get_name(rm));
-    xx += self.gap;
-}
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="39">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Go to the next test
-
-if room_exists(room_next(room))
-{
-    room_goto_next();
+    draw_text(xx,y,"#" + self.updates_available);
+    draw_text(xx,y,"##Manifest name: " + ds_map_find_value(global.manifest,"name"));
+    draw_text(xx,y,"###Manifest version: " + ds_map_find_value(global.manifest,"version"));
 }
 else
 {
-    room_goto(room_first);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="37">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Go to the previous room
-
-if room_exists(room_previous(room))
-{
-    room_goto_previous();
-}
-else
-{
-    room_goto(room_last);
+    draw_text_ext(xx,y,
+        "#You must run in a chrome app in order "+
+        "to use most of the functionality in this "+
+        "extension. You can use the chrome_is_app() "+
+        "function to test for a Chrome App environment.",-1,256);
 }
 </string>
           </argument>
