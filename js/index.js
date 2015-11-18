@@ -20,6 +20,7 @@ var e = {
 // package to the window for GameMaker to use.
 var w = window;
 w.ChromeIsApp = e.util.isApp;
+w.ChromePackageLoad = e.util.packageLoad;
 w.ChromeHasResult = e.async.hasResult;
 w.ChromeGetResult = e.async.getResult;
 w.ChromeRuntimeGetManifest = e.runtime.getManifest;

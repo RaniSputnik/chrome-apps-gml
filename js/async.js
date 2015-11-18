@@ -46,7 +46,7 @@ module.exports = {
 	getResult: function(ev, field){
 		return EVENT_RESULTS[ev][field];
 	}
-}
+};
 
 // Frees up all the events that have been used
 function freeOldEvents(){

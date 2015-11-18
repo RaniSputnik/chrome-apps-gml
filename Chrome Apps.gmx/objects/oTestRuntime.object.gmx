@@ -33,6 +33,7 @@ global.is_chrome_app = chrome_is_app();
 global.manifest = noone;
 self.updates_available = "Checking for updates...";
 self.ev_update_check = noone;
+self.ev_load_included_file = noone;
 
 if (global.is_chrome_app)
 {
@@ -40,9 +41,9 @@ if (global.is_chrome_app)
     global.manifest = json_decode(chrome_runtime_get_manifest());
     // Check for updates
     self.ev_update_check = chrome_runtime_request_update_check();
+    // Load a file from the app bundle
+    self.ev_load_included_file = chrome_package_load("game/package.json");
 }
-
-
 </string>
           </argument>
         </arguments>
@@ -85,6 +86,41 @@ if chrome_has_result(self.ev_update_check)
         self.updates_available = "Version check was throttled";
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Handle file load response
+
+if chrome_has_result(self.ev_load_included_file)
+{
+    var error = chrome_get_result(self.ev_load_included_file,"error");
+    if error != ""
+    {
+        show_debug_message("GameMaker failed to load included file");
+    }
+    else
+    {
+        var result = chrome_get_result(self.ev_load_included_file,"result");
+        show_debug_message(result);
+    }
+}   
 </string>
           </argument>
         </arguments>
