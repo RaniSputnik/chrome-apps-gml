@@ -2,8 +2,8 @@
 <extension>
   <name>Chrome App</name>
   <version>0.1.0</version>
-  <packageID></packageID>
-  <ProductID></ProductID>
+  <packageID>com.ranisputnik.ChromePackagedApps</packageID>
+  <ProductID>B7C4F98F5C1F61AFDC2EE66D3B5B8A3C</ProductID>
   <date>15/11/15</date>
   <license>Free to use, also for commercial games.</license>
   <description></description>

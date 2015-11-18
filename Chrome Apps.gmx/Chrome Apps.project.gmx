@@ -15,22 +15,26 @@
   <paths name="paths"/>
   <fonts name="fonts">
     <font>fonts\fRegular</font>
+    <font>fonts\fRooms</font>
   </fonts>
   <objects name="objects">
     <object>objects\oTestNavigator</object>
-    <object>objects\oTester</object>
     <object>objects\oButton</object>
-    <object>objects\oButtonBuy</object>
-    <object>objects\oButtonConsume</object>
-    <object>objects\oDisplayProductCount</object>
-    <object>objects\oTestStorage</object>
-    <object>objects\oButtonStorageRandomize</object>
-    <object>objects\oButtonStorageSave</object>
+    <object>objects\oTester</object>
+    <objects name="Storage">
+      <object>objects\oTestStorage</object>
+      <object>objects\oButtonStorageRandomize</object>
+      <object>objects\oButtonStorageSave</object>
+    </objects>
+    <objects name="Products">
+      <object>objects\oTestProducts</object>
+      <object>objects\oButtonBuy</object>
+      <object>objects\oButtonConsume</object>
+    </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rmTest</room>
-    <room>rooms\rmTestStorage</room>
-    <room>rooms\rmTestPayments</room>
+    <room>rooms\rmStorage</room>
+    <room>rooms\rmProducts</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

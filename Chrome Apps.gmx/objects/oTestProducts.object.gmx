@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,22 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Gather all the rooms
+            <string>/// Initialize
 
-self.room_count = 0;
-var next = room;
-while room_exists(next) {
-    self.rooms[self.room_count++] = next;
-    next = room_next(next);
-}
-
-self.gap = room_width / self.room_count;
+self.sku = "test_product";
+self.ev_purchases = chrome_inapp_get_purchases();
+self.title = chrome_inapp_title(self.sku);
+self.description = chrome_inapp_description(self.sku);
+self.num = -1;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="56">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -57,12 +54,9 @@ self.gap = room_width / self.room_count;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Change rooms
-
-if mouse_y &lt; 48
-{
-    var rm_index = floor(mouse_x / self.gap);
-    room_goto(self.rooms[rm_index]);
+            <string>if chrome_has_result(self.ev_purchases)
+{   
+    self.num = chrome_get_result(self.ev_purchases, self.sku);
 }
 </string>
           </argument>
@@ -86,94 +80,24 @@ if mouse_y &lt; 48
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw the rooms across the top bar
+            <string>/// Draw the product count
 
-draw_set_halign(fa_center);
-draw_set_valign(fa_middle);
-draw_set_font(fRooms);
+draw_set_color(c_black);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+draw_set_font(fRegular);
 
-var xx = self.gap &gt;&gt; 1;
-
-for (var i = 0; i &lt; self.room_count; i++) 
+var xx = x - 128;
+if self.num &gt;= 0
 {
-    var rm = self.rooms[i];
-    if (rm == room) 
-    {
-        draw_set_color($F39621);
-    }
-    else
-    {
-        draw_set_color($212121);
-    }
-    draw_text(xx,16,room_get_name(rm));
-    xx += self.gap;
-}
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="39">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Go to the next test
-
-if room_exists(room_next(room))
-{
-    room_goto_next();
+    draw_text(xx,y,"Product Count (SKU="+string(self.sku)+"): "+string(self.num)); 
 }
 else
 {
-    room_goto(room_first);
+    draw_text(xx,y,"Getting purchase details...");
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="37">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Go to the previous room
-
-if room_exists(room_previous(room))
-{
-    room_goto_previous();
-}
-else
-{
-    room_goto(room_last);
-}
+draw_text(xx,y,"#"+string(self.title));
+draw_text_ext(xx,y,"##"+string(self.description),-1,256);
 </string>
           </argument>
         </arguments>
