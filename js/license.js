@@ -10,6 +10,7 @@
 // Invalid OAuth2 Client ID - client_id in oauth section of manifest is missing or invalid
 
 var async = require('./async');
+var util = require('./utils');
 var xhrWithAuth = require('./xhrWithAuth');
 
 // The base URL for loading user licenses
@@ -47,7 +48,10 @@ module.exports = {
 					}
 					res.result = response.result? 1 : 0;
 					if (response.createdTime) {
-						res.createdTime = response.createdTime;
+						// createTime is given in milliseconds, so we convert it to seconds
+						var seconds = response.createdTime * 0.001;
+						// then transform createdTime to a GameMaker DateTime
+						res.createdTime = util.timestampToDatetime(seconds);
 					}
 					if (response.accessLevel) {
 						res.accessLevel = response.accessLevel;

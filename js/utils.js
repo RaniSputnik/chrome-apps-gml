@@ -49,5 +49,15 @@ module.exports = {
 			res.error = e.message;
 		}
 		return ev;
+	},
+
+	// Converts a GameMaker datetime to timestamp
+	datetimeToTimestamp: function(datetime){
+		return (datetime - 25569) * 864000;
+	},
+
+	// Converts a Unix timestamp to a GameMaker datetime
+	timestampToDatetime: function(timestamp){
+		return 25569 + timestamp * 0.000011574070;
 	}
 }
