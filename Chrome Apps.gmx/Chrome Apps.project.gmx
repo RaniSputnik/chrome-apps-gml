@@ -30,6 +30,9 @@
       <object>objects\oButtonStorageRandomize</object>
       <object>objects\oButtonStorageSave</object>
     </objects>
+    <objects name="License">
+      <object>objects\oTestLicense</object>
+    </objects>
     <objects name="Products">
       <object>objects\oTestProducts</object>
       <object>objects\oButtonBuy</object>
@@ -39,6 +42,7 @@
   <rooms name="rooms">
     <room>rooms\rmRuntime</room>
     <room>rooms\rmStorage</room>
+    <room>rooms\rmLicense</room>
     <room>rooms\rmProducts</room>
   </rooms>
   <constants number="2">
