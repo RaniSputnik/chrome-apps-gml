@@ -8,7 +8,7 @@
 // the chrome app packages eg. e.runtime = chrome.runtime
 var e = {
 	async: require('./async'),
-	util: require('./utils'),
+	utils: require('./utils'),
 	runtime: require('./runtime'),
 	storage: require('./storage'),
 	i18n: require('./i18n'),
@@ -16,33 +16,48 @@ var e = {
 	inapp: require('./inapp')
 };
 
+// Used to export a function to the window. Exports
+// empty functions if we aren't running as a Chrome App.
+function ext(name, func){
+	if (!IS_APP) {
+		func = emptyFunc;
+	}
+	window[name] = func;
+}
+
+// A blank function that will simply return 0
+// Used when we are not running in a Chrome App.
+function emptyFunc(){
+	return 0;
+}
+
 // Then we export each of the public functions from each
 // package to the window for GameMaker to use.
-var w = window;
-w.ChromeIsApp = e.util.isApp;
-w.ChromePackageLoad = e.util.packageLoad;
-w.ChromeHasResult = e.async.hasResult;
-w.ChromeGetResult = e.async.getResult;
-w.ChromeRuntimeGetManifest = e.runtime.getManifest;
-w.ChromeRuntimeRequestUpdateCheck = e.runtime.requestUpdateCheck;
-w.ChromeRuntimeReload = e.runtime.reload;
-w.ChromeStorageGet = e.storage.get;
-w.ChromeStorageBegin = e.storage.begin;
-w.ChromeStorageSet = e.storage.set;
-w.ChromeStorageSave = e.storage.save;
-w.ChromeStorageRemove = e.storage.remove;
-w.ChromeStorageClear = e.storage.clear;
-w.ChromeStorageOnChanged = e.storage.onChanged;
-w.ChromeI18nGetMessage = e.i18n.getMessage;
-w.ChromeI18nGetAcceptedLanguages = e.i18n.getAcceptedLanguages;
-w.ChromeI18nGetUILanguage = e.i18n.getUILanguage;
-w.ChromeLicenseLoad = e.license.load;
-w.ChromeInAppGetProducts = e.inapp.getProducts;
-w.ChromeInAppTitle = e.inapp.title;
-w.ChromeInAppDescription = e.inapp.description;
-w.ChromeInAppPrice = e.inapp.price;
-w.ChromeInAppPriceCurrency = e.inapp.priceCurrency;
-w.ChromeInAppPriceRegion = e.inapp.priceRegion;
-w.ChromeInAppBuy = e.inapp.buy;
-w.ChromeInAppGetPurchases = e.inapp.getPurchases;
-w.ChromeInAppConsume = e.inapp.consume;
+var IS_APP = e.utils.isApp();
+ext('ChromeIsApp', e.utils.isApp);
+ext('ChromePackageLoad', e.utils.packageLoad);
+ext('ChromeHasResult', e.async.hasResult);
+ext('ChromeGetResult', e.async.getResult);
+ext('ChromeRuntimeGetManifest', e.runtime.getManifest);
+ext('ChromeRuntimeRequestUpdateCheck', e.runtime.requestUpdateCheck);
+ext('ChromeRuntimeReload', e.runtime.reload);
+ext('ChromeStorageGet', e.storage.get);
+ext('ChromeStorageBegin', e.storage.begin);
+ext('ChromeStorageSet', e.storage.set);
+ext('ChromeStorageSave', e.storage.save);
+ext('ChromeStorageRemove', e.storage.remove);
+ext('ChromeStorageClear', e.storage.clear);
+ext('ChromeStorageOnChanged', e.storage.onChanged);
+ext('ChromeI18nGetMessage', e.i18n.getMessage);
+ext('ChromeI18nGetAcceptedLanguages', e.i18n.getAcceptedLanguages);
+ext('ChromeI18nGetUILanguage', e.i18n.getUILanguage);
+ext('ChromeLicenseLoad', e.license.load);
+ext('ChromeInAppGetProducts', e.inapp.getProducts);
+ext('ChromeInAppTitle', e.inapp.title);
+ext('ChromeInAppDescription', e.inapp.description);
+ext('ChromeInAppPrice', e.inapp.price);
+ext('ChromeInAppPriceCurrency', e.inapp.priceCurrency);
+ext('ChromeInAppPriceRegion', e.inapp.priceRegion);
+ext('ChromeInAppBuy', e.inapp.buy);
+ext('ChromeInAppGetPurchases', e.inapp.getPurchases);
+ext('ChromeInAppConsume', e.inapp.consume);
