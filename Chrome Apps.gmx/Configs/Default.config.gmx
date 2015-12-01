@@ -249,13 +249,7 @@
     <option_html5_icon>Configs\Default\html5\fav.ico</option_html5_icon>
     <option_html5_index>-1</option_html5_index>
     <option_html5_interpolate>-1</option_html5_interpolate>
-    <option_html5_jsprepend>window.localStorage = {
-	key: function(){},
-	length: 0,
-	getItem: function(){},
-	setItem: function(){},
-	removeItem: function(){}
-};</option_html5_jsprepend>
+    <option_html5_jsprepend>if (chrome &amp;&amp; chrome.app &amp;&amp; chrome.app.window){ window.localStorage = { key: function(){}, length: 0, getItem: function(){}, setItem: function(){}, removeItem: function(){} }; }</option_html5_jsprepend>
     <option_html5_loadingbar>-1</option_html5_loadingbar>
     <option_html5_localrunalert>True</option_html5_localrunalert>
     <option_html5_outputdebugtoconsole>True</option_html5_outputdebugtoconsole>
