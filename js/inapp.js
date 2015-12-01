@@ -27,7 +27,7 @@ var ext = module.exports = {
 					INAPP_PRODUCTS[product.sku] = product;
 				}
 			},
-			'failure': function onSkuDetailsFail(repsonse){
+			'failure': function onSkuDetailsFail(response){
 				console.error("Getting In-App Products failed", response);
 				var res = async.provideResponse(ev);
 				res.error = "An unknown error occurred, check the console for more information";
