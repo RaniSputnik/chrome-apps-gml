@@ -323,6 +323,17 @@
             <arg>1</arg>
           </args>
         </function>
+        <function>
+          <name>chrome_cancel</name>
+          <externalName>ChromeCancel</externalName>
+          <kind>11</kind>
+          <help>chrome_cancel(event)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>2</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>

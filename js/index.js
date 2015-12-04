@@ -40,6 +40,7 @@ ext('ChromeIsApp', e.utils.isApp);
 ext('ChromePackageLoad', e.utils.packageLoad);
 ext('ChromeHasResult', e.async.hasResult);
 ext('ChromeGetResult', e.async.getResult);
+ext('ChromeCancel', e.async.cancel);
 ext('ChromeRuntimeGetManifest', e.runtime.getManifest);
 ext('ChromeRuntimeRequestUpdateCheck', e.runtime.requestUpdateCheck);
 ext('ChromeRuntimeReload', e.runtime.reload);
