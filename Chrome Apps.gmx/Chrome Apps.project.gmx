@@ -38,7 +38,6 @@
   <objects name="objects">
     <object>objects\oTestNavigator</object>
     <object>objects\oButton</object>
-    <object>objects\oTester</object>
     <objects name="Runtime">
       <object>objects\oTestRuntime</object>
       <object>objects\oButtonReload</object>
