@@ -44,7 +44,7 @@ module.exports = {
 	// Must be called between a begin/end block
 	get: function(key){
 		if (checkEditMode(EDIT_MODE_GETTING)) {
-			SHARED_ARRAY.push(key);
+			Array.prototype.push.apply(SHARED_ARRAY,arguments);
 			return 1;
 		}
 		return 0;
@@ -64,7 +64,7 @@ module.exports = {
 	// Must be called between a begin/end block
 	remove: function(key){
 		if (checkEditMode(EDIT_MODE_REMOVING)) {
-			SHARED_ARRAY.push(key);
+			Array.prototype.push.apply(SHARED_ARRAY,arguments);
 			return 1;
 		}
 		return 0;
