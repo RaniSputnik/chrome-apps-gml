@@ -18,7 +18,7 @@ var SHARED_OBJECT = {};
 var SHARED_ARRAY = [];
 
 // The event id for the onChanged event
-var ON_CHANGED_EVENT = 0;
+var ON_CHANGED_EVENT = -1;
 
 var EDIT_MODE_NONE = 0;
 var EDIT_MODE_GETTING = 1;
@@ -150,12 +150,12 @@ module.exports = {
 	// Returns a handle for the on-changed event
 	onChanged: function(){
 		console.log("On Changed");
-		if (ON_CHANGED_EVENT == 0 && chrome.storage) {
+		if (ON_CHANGED_EVENT < 0 && chrome.storage) {
 			console.log("Adding storage onchanged listener");
 			ON_CHANGED_EVENT = async.deferResponse();
 			chrome.storage.onChanged.addListener(function onChanged(changes, area){
 				console.log("Storage changed",changes,area);
-				var res = async.provideResponse(ON_CHANGED_EVENT);
+				var res = async.provideResponse(ON_CHANGED_EVENT, true);
 				res.area = area;
 				for (var key in changes) {
 					res[key] = changes[key].newValue;

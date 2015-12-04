@@ -92,7 +92,7 @@ if chrome_has_result(self.ev_loading)
 if chrome_has_result(self.ev_changed) {
     var area = chrome_get_result(self.ev_changed,"area");
     if (area == cpa_storage_sync) {
-        show_debug_message("Storage changed");
+        show_debug_message("GameMaker detected storage changed");
         var fv = chrome_get_result(self.ev_changed,"myFirstValue");
         var sv = chrome_get_result(self.ev_changed,"mySecondValue");
         if not is_undefined(fv) then self.firstValue = fv;
