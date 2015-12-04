@@ -27,7 +27,10 @@
             <kind>1</kind>
             <string>/// Initialize
 
-self.ev_loading = chrome_storage_get(cpa_storage_sync,"myFirstValue","mySecondValue");
+chrome_storage_begin(cpa_storage_sync);
+chrome_storage_get("myFirstValue");
+chrome_storage_get("mySecondValue");
+self.ev_loading = chrome_storage_end();
 self.ev_changed = chrome_storage_on_changed();
 
 self.firstValue = undefined;

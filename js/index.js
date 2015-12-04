@@ -16,6 +16,9 @@ var e = {
 	inapp: require('./inapp')
 };
 
+// Whether or not we are currently running as a Chrome App.
+var IS_APP = e.utils.isApp();
+
 // Used to export a function to the window. Exports
 // empty functions if we aren't running as a Chrome App.
 function ext(name, func){
@@ -33,7 +36,6 @@ function emptyFunc(){
 
 // Then we export each of the public functions from each
 // package to the window for GameMaker to use.
-var IS_APP = e.utils.isApp();
 ext('ChromeIsApp', e.utils.isApp);
 ext('ChromePackageLoad', e.utils.packageLoad);
 ext('ChromeHasResult', e.async.hasResult);
@@ -41,11 +43,11 @@ ext('ChromeGetResult', e.async.getResult);
 ext('ChromeRuntimeGetManifest', e.runtime.getManifest);
 ext('ChromeRuntimeRequestUpdateCheck', e.runtime.requestUpdateCheck);
 ext('ChromeRuntimeReload', e.runtime.reload);
-ext('ChromeStorageGet', e.storage.get);
 ext('ChromeStorageBegin', e.storage.begin);
+ext('ChromeStorageGet', e.storage.get);
 ext('ChromeStorageSet', e.storage.set);
-ext('ChromeStorageSave', e.storage.save);
 ext('ChromeStorageRemove', e.storage.remove);
+ext('ChromeStorageEnd', e.storage.end);
 ext('ChromeStorageClear', e.storage.clear);
 ext('ChromeStorageOnChanged', e.storage.onChanged);
 ext('ChromeI18nGetMessage', e.i18n.getMessage);

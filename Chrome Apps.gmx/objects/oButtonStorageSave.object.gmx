@@ -70,7 +70,7 @@ with oTestStorage {
     chrome_storage_begin(cpa_storage_sync);
     chrome_storage_set("myFirstValue",self.firstValue);
     chrome_storage_set("mySecondValue",self.secondValue);
-    self.ev_saving = chrome_storage_save();
+    self.ev_saving = chrome_storage_end();
 }
 </string>
           </argument>

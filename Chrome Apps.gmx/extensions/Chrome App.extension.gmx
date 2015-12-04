@@ -264,10 +264,10 @@
           </args>
         </function>
         <function>
-          <name>chrome_storage_save</name>
-          <externalName>ChromeStorageSave</externalName>
+          <name>chrome_storage_end</name>
+          <externalName>ChromeStorageEnd</externalName>
           <kind>11</kind>
-          <help>chrome_storage_save() ASYNC</help>
+          <help>chrome_storage_end() ASYNC</help>
           <returnType>2</returnType>
           <argCount>0</argCount>
           <args/>

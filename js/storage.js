@@ -10,109 +10,127 @@ var AREA_LOCAL = 'local';
 // The managed storage area
 var AREA_MANAGED = 'managed';
 
-// The current edits that have been made
-var EDITS = {};
 // The current area we are editing
 var AREA = '';
 
-// An array we share to avoid creating extra garbage
+// Objects we share to avoid creating extra garbage
+var SHARED_OBJECT = {};
 var SHARED_ARRAY = [];
 
 // The event id for the onChanged event
 var ON_CHANGED_EVENT = 0;
 
-module.exports = {
+var EDIT_MODE_NONE = 0;
+var EDIT_MODE_GETTING = 1;
+var EDIT_MODE_SETTING = 2;
+var EDIT_MODE_REMOVING = 3;
+var EDIT_MODE = EDIT_MODE_NONE;
 
-	// Gets values from the given storage area, you can specify as many
-	// keys as you like by using get(area, key,key,key...)
-	get: function(){
-		var ev = async.deferResponse();
-		if (checkStoragePermissions(ev)) {
-			var area = arguments[0];
-			SHARED_ARRAY.length = 0;
-			for (var i = 1, n = arguments.length; i < n; i++) {
-				SHARED_ARRAY.push(String(arguments[i]))
-			}
-			chrome.storage[area].get(SHARED_ARRAY, function gotValues(values){
-				var res = async.provideResponse(ev);
-				if (chrome.runtime.lastError) {
-					// If an error occurred, add that to the result
-					res.error = chrome.runtime.lastError.message;
-					res.result = 0;
-				} else {
-					// Copy the results into the response
-					res.error = "";
-					res.result = 1;
-					for (var key in values) {
-						res[key] = values[key];
-					}
-				}
-			});
-		}
-		return ev;
-	},
+module.exports = {
 
 	// Start making changes to the given area
 	// must be called before using set
 	// Returns true if the given area exists
 	begin: function(area){
 		if (chrome.storage && (area == AREA_SYNC || area == AREA_LOCAL)) {
+			clearEdits();
 			AREA = area;
-			for (var key in EDITS) {
-				delete EDITS[key];
-			}
+			return 1;
+		}
+		return 0;
+	},
+
+	// Gets the given key from the current storage area
+	// Must be called between a begin/end block
+	get: function(key){
+		if (checkEditMode(EDIT_MODE_GETTING)) {
+			SHARED_ARRAY.push(key);
 			return 1;
 		}
 		return 0;
 	},
 
 	// Sets the given key to the given value
+	// Must be called between a begin/end block
 	set: function(key, value){
-		EDITS[key] = value;
-	},
-
-	// Commits changes made to the storage area
-	save: function(){
-		var ev = async.deferResponse();
-		if (checkStoragePermissions(ev)) {
-			chrome.storage[AREA].set(EDITS, function saveComplete(){
-				var res = async.provideResponse(ev);
-				if (chrome.runtime.lastError) {
-					res.error = chrome.runtime.lastError.message;
-					res.result = 0;
-				} else {
-					res.error = "";
-					res.result = 1;
-				}
-			});
+		if (checkEditMode(EDIT_MODE_SETTING)) {
+			SHARED_OBJECT[key] = value;
+			return 1;
 		}
-		AREA = '';
-		return ev;
+		return 0;
 	},
 
-	// Removes values from the given storage area, you can specify as many
-	// keys as you like by using remove(area, key,key,key...)
-	remove: function(){
+	// Removes values from the given storage area
+	// Must be called between a begin/end block
+	remove: function(key){
+		if (checkEditMode(EDIT_MODE_REMOVING)) {
+			SHARED_ARRAY.push(key);
+			return 1;
+		}
+		return 0;
+	},
+
+	// Commits / Fetches changes made to the storage area
+	end: function(){
 		var ev = async.deferResponse();
-		if (checkStoragePermissions(ev)) {
-			var area = arguments[0];
-			SHARED_ARRAY.length = 0;
-			for (var i = 1, n = arguments.length; i < n; i++) {
-				SHARED_ARRAY.push(String(arguments[i]))
+		if (checkStoragePermissions(ev) && AREA != '') {
+			switch (EDIT_MODE) {
+
+				// If we are getting values, then load those keys
+				case EDIT_MODE_GETTING:
+					chrome.storage[AREA].get(SHARED_ARRAY.concat(), function gotValues(values){
+						var res = async.provideResponse(ev);
+						if (chrome.runtime.lastError) {
+							// If an error occurred, add that to the result
+							res.error = chrome.runtime.lastError.message;
+							res.result = 0;
+						} else {
+							// Copy the results into the response
+							res.error = "";
+							res.result = 1;
+							for (var key in values) {
+								res[key] = values[key];
+							}
+						}
+					});
+					break;
+
+				// If we were setting values, then save those edits
+				case EDIT_MODE_SETTING:
+					chrome.storage[AREA].set(SHARED_OBJECT, function saveComplete(){
+						var res = async.provideResponse(ev);
+						if (chrome.runtime.lastError) {
+							res.error = chrome.runtime.lastError.message;
+							res.result = 0;
+						} else {
+							res.error = "";
+							res.result = 1;
+						}
+					});
+					break;
+
+				// If we are removing values, then remove the keys
+				case EDIT_MODE_REMOVING:
+					chrome.storage[AREA].remove(SHARED_ARRAY.concat(), function removedValues(values){
+						var res = async.provideResponse(ev);
+						if (chrome.runtime.lastError) {
+							// If an error occurred, add that to the result
+							res.error = chrome.runtime.lastError.message;
+							res.result = 0;
+						} else {
+							// Copy the results into the response
+							res.error = "";
+							res.result = 1;
+						}
+					});
+					break;
+
+				case EDIT_MODE_NONE:
+					console.warn('Chrome storage cannot commit changes, no changes were made');
+					break;
 			}
-			chrome.storage[area].remove(SHARED_ARRAY, function removedValues(values){
-				var res = async.provideResponse(ev);
-				if (chrome.runtime.lastError) {
-					// If an error occurred, add that to the result
-					res.error = chrome.runtime.lastError.message;
-					res.result = 0;
-				} else {
-					// Copy the results into the response
-					res.error = "";
-					res.result = 1;
-				}
-			});
 		}
+		clearEdits();
 		return ev;
 	},
 
@@ -163,4 +181,28 @@ function checkStoragePermissions(ev){
 		return false;
 	}
 	return true;
+}
+
+// Checks that the current edit mode matches the requested edit mode
+// or is set to 'none'
+function checkEditMode(editMode){
+	if (EDIT_MODE == EDIT_MODE_NONE){
+		EDIT_MODE = editMode;
+		return true;
+	} else if (EDIT_MODE == editMode) {
+		return 1;
+	} else {
+		console.error('Chrome storage ignoring command, you must not mix get/set/remove statements within a single begin/end block.');
+		return 0;
+	}
+}
+
+// Clears the shared objects for reuse
+function clearEdits(){
+	for (var key in SHARED_OBJECT) {
+		delete SHARED_OBJECT[key];
+	}
+	SHARED_ARRAY.length = 0;
+	EDIT_MODE = EDIT_MODE_NONE;
+	AREA = '';
 }
