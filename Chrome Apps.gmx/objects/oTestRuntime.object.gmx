@@ -68,10 +68,10 @@ if (global.is_chrome_app)
             <kind>1</kind>
             <string>/// Handle update response
 
-if chrome_has_result(self.ev_update_check)
+if chrome_ready(self.ev_update_check)
 {
-    var status = chrome_get_result(self.ev_update_check,"status");
-    var version = chrome_get_result(self.ev_update_check,"version");
+    var status = chrome_get(self.ev_update_check,"status");
+    var version = chrome_get(self.ev_update_check,"version");
     
     if status == cpa_update_available
     {
@@ -108,16 +108,16 @@ if chrome_has_result(self.ev_update_check)
             <kind>1</kind>
             <string>/// Handle file load response
 
-if chrome_has_result(self.ev_load_included_file)
+if chrome_ready(self.ev_load_included_file)
 {
-    var error = chrome_get_result(self.ev_load_included_file,"error");
+    var error = chrome_get(self.ev_load_included_file,"error");
     if error != ""
     {
         show_debug_message("GameMaker failed to load included file");
     }
     else
     {
-        var result = chrome_get_result(self.ev_load_included_file,"result");
+        var result = chrome_get(self.ev_load_included_file,"result");
         show_debug_message(result);
     }
 }   

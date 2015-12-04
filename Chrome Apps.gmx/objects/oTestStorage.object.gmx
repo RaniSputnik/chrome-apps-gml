@@ -60,11 +60,11 @@ self.error = "";
             <kind>1</kind>
             <string>/// Handle loading response
 
-if chrome_has_result(self.ev_loading)
+if chrome_ready(self.ev_loading)
 {
-    self.error = chrome_get_result(self.ev_loading,"error");
-    self.firstValue = chrome_get_result(self.ev_loading,"myFirstValue");
-    self.secondValue = chrome_get_result(self.ev_loading,"mySecondValue");
+    self.error = chrome_get(self.ev_loading,"error");
+    self.firstValue = chrome_get(self.ev_loading,"myFirstValue");
+    self.secondValue = chrome_get(self.ev_loading,"mySecondValue");
     self.ev_loading = noone;
 }
 </string>
@@ -89,12 +89,12 @@ if chrome_has_result(self.ev_loading)
             <kind>1</kind>
             <string>/// On change handle updates
 
-if chrome_has_result(self.ev_changed) {
-    var area = chrome_get_result(self.ev_changed,"area");
+if chrome_ready(self.ev_changed) {
+    var area = chrome_get(self.ev_changed,"area");
     if (area == cpa_storage_sync) {
         show_debug_message("GameMaker detected storage changed");
-        var fv = chrome_get_result(self.ev_changed,"myFirstValue");
-        var sv = chrome_get_result(self.ev_changed,"mySecondValue");
+        var fv = chrome_get(self.ev_changed,"myFirstValue");
+        var sv = chrome_get(self.ev_changed,"mySecondValue");
         if not is_undefined(fv) then self.firstValue = fv;
         if not is_undefined(sv) then self.secondValue = sv;
     }

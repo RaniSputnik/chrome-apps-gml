@@ -58,9 +58,9 @@ self.license_info = "Loading license info...";
             <kind>1</kind>
             <string>/// Check for license info
 
-if chrome_has_result(self.ev_license)
+if chrome_ready(self.ev_license)
 {
-    var e = chrome_get_result(self.ev_license, "error");
+    var e = chrome_get(self.ev_license, "error");
     if e != ""
     {
         if self.interactive
@@ -81,8 +81,8 @@ if chrome_has_result(self.ev_license)
     else
     {
         // Nothing went wrong, we got license info
-        var access_level = chrome_get_result(self.ev_license,"accessLevel");
-        var created_time = chrome_get_result(self.ev_license,"createdTime");
+        var access_level = chrome_get(self.ev_license,"accessLevel");
+        var created_time = chrome_get(self.ev_license,"createdTime");
         var created_time_str = "";
         if not is_undefined(created_time)
         {

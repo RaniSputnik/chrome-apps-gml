@@ -54,9 +54,9 @@ self.num = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if chrome_has_result(self.ev_purchases)
+            <string>if chrome_ready(self.ev_purchases)
 {   
-    self.num = chrome_get_result(self.ev_purchases, self.sku);
+    self.num = chrome_get(self.ev_purchases, self.sku);
 }
 </string>
           </argument>

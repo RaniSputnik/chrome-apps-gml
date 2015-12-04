@@ -80,9 +80,9 @@ self.ev_buy = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if chrome_has_result(self.ev_buy)
+            <string>if chrome_ready(self.ev_buy)
 {
-    var error = chrome_get_result(self.ev_buy, "error");
+    var error = chrome_get(self.ev_buy, "error");
     if (error != "") 
     {
         self.error = error;

@@ -67,9 +67,9 @@ self.error = "";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if chrome_has_result(self.ev_consume)
+            <string>if chrome_ready(self.ev_consume)
 {
-    var error = chrome_get_result(self.ev_consume, "error");
+    var error = chrome_get(self.ev_consume, "error");
     if (error != "") 
     {
         self.error = error;

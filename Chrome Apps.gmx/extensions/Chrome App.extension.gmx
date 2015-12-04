@@ -67,10 +67,10 @@
           <args/>
         </function>
         <function>
-          <name>chrome_has_result</name>
+          <name>chrome_ready</name>
           <externalName>ChromeHasResult</externalName>
           <kind>11</kind>
-          <help>chrome_has_result(event)</help>
+          <help>chrome_ready(event)</help>
           <returnType>2</returnType>
           <argCount>1</argCount>
           <args>
@@ -96,10 +96,10 @@
           <args/>
         </function>
         <function>
-          <name>chrome_get_result</name>
+          <name>chrome_get</name>
           <externalName>ChromeGetResult</externalName>
           <kind>11</kind>
-          <help>chrome_get_result(event, field)</help>
+          <help>chrome_get(event, field)</help>
           <returnType>2</returnType>
           <argCount>2</argCount>
           <args>
