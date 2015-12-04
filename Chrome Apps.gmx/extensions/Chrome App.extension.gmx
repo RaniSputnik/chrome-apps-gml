@@ -3,7 +3,7 @@
   <name>Chrome App</name>
   <version>0.2.0</version>
   <packageID>com.ranisputnik.ChromePackagedApps</packageID>
-  <ProductID>B7C4F98F5C1F61AFDC2EE66D3B5B8A3C</ProductID>
+  <ProductID></ProductID>
   <date>15/11/15</date>
   <license>Free to use, also for commercial games.</license>
   <description></description>
@@ -235,10 +235,12 @@
           <name>chrome_storage_get</name>
           <externalName>ChromeStorageGet</externalName>
           <kind>11</kind>
-          <help>chrome_storage_get(area,keys...) ASYNC</help>
+          <help>chrome_storage_get(key)</help>
           <returnType>2</returnType>
-          <argCount>-1</argCount>
-          <args/>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
         </function>
         <function>
           <name>chrome_storage_begin</name>
@@ -276,10 +278,12 @@
           <name>chrome_storage_remove</name>
           <externalName>ChromeStorageRemove</externalName>
           <kind>11</kind>
-          <help>chrome_storage_remove(area,keys...) ASYNC</help>
+          <help>chrome_storage_remove(key)</help>
           <returnType>2</returnType>
-          <argCount>0</argCount>
-          <args/>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
         </function>
         <function>
           <name>chrome_storage_clear</name>
