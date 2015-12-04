@@ -48,6 +48,7 @@ ext('ChromeStorageGet', e.storage.get);
 ext('ChromeStorageSet', e.storage.set);
 ext('ChromeStorageRemove', e.storage.remove);
 ext('ChromeStorageEnd', e.storage.end);
+ext('ChromeStorageGetAll', e.storage.getAll);
 ext('ChromeStorageClear', e.storage.clear);
 ext('ChromeStorageOnChanged', e.storage.onChanged);
 ext('ChromeI18nGetMessage', e.i18n.getMessage);

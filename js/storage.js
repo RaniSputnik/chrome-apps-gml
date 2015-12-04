@@ -78,21 +78,7 @@ module.exports = {
 
 				// If we are getting values, then load those keys
 				case EDIT_MODE_GETTING:
-					chrome.storage[AREA].get(SHARED_ARRAY.concat(), function gotValues(values){
-						var res = async.provideResponse(ev);
-						if (chrome.runtime.lastError) {
-							// If an error occurred, add that to the result
-							res.error = chrome.runtime.lastError.message;
-							res.result = 0;
-						} else {
-							// Copy the results into the response
-							res.error = "";
-							res.result = 1;
-							for (var key in values) {
-								res[key] = values[key];
-							}
-						}
-					});
+					chrome.storage[AREA].get(SHARED_ARRAY, getKeysResponseFactory(ev));
 					break;
 
 				// If we were setting values, then save those edits
@@ -111,7 +97,7 @@ module.exports = {
 
 				// If we are removing values, then remove the keys
 				case EDIT_MODE_REMOVING:
-					chrome.storage[AREA].remove(SHARED_ARRAY.concat(), function removedValues(values){
+					chrome.storage[AREA].remove(SHARED_ARRAY, function removedValues(values){
 						var res = async.provideResponse(ev);
 						if (chrome.runtime.lastError) {
 							// If an error occurred, add that to the result
@@ -131,6 +117,15 @@ module.exports = {
 			}
 		}
 		clearEdits();
+		return ev;
+	},
+
+	// Gets all keys for a given storage area
+	getAll: function(area){
+		var ev = async.deferResponse();
+		if (checkStoragePermissions(ev)) {
+			chrome.storage[area].get(null, getKeysResponseFactory(ev));
+		}
 		return ev;
 	},
 
@@ -205,4 +200,25 @@ function clearEdits(){
 	SHARED_ARRAY.length = 0;
 	EDIT_MODE = EDIT_MODE_NONE;
 	AREA = '';
+}
+
+// Returns a function that responds to a 'get' request
+// to chrome.storage. Used to create identical response
+// behaviour between get and getAll
+function getKeysResponseFactory(ev){
+	return function gotValues(values){
+		var res = async.provideResponse(ev);
+		if (chrome.runtime.lastError) {
+			// If an error occurred, add that to the result
+			res.error = chrome.runtime.lastError.message;
+			res.result = 0;
+		} else {
+			// Copy the results into the response
+			res.error = "";
+			res.result = 1;
+			for (var key in values) {
+				res[key] = values[key];
+			}
+		}
+	}
 }

@@ -312,6 +312,17 @@
             <arg>1</arg>
           </args>
         </function>
+        <function>
+          <name>chrome_storage_get_all</name>
+          <externalName>ChromeStorageGetAll</externalName>
+          <kind>11</kind>
+          <help>chrome_storage_get_all(area) ASYNC</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>
