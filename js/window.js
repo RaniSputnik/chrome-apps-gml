@@ -58,10 +58,6 @@ module.exports = {
 		} else {
 			errorNoWindowWithId(id, 'setSize');
 		}
-	},
-
-	setRect: function(id, x,y, w,h){
-
 	}
 };
 
