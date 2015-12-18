@@ -1,6 +1,6 @@
 {
   "name": "chrome-apps-gml",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A GameMaker extension that provides extended functionality for HTML5 games packaged as Chrome Apps",
   "repository": {
     "type": "git",
