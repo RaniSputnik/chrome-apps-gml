@@ -11,6 +11,6 @@ If you want to make changes to the extension bridge file, then you will need [No
 
 There are a number of GameMaker functions that do not work correctly in the Chrome Packaged App environment, they are listed below;
 
-- *show_message()* fails as window.alert is not allowed in a Chrome App, use show_message_async instead.
-- *game_end()* fails silently in the HTML5 module, instead use chrome_window_close to close the current window.
+- **show_message()** fails as window.alert is not allowed in a Chrome App, use show_message_async instead.
+- **game_end()** fails silently in the HTML5 module, instead use chrome_window_close to close the current window.
 
