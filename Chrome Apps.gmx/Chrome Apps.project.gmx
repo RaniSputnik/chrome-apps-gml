@@ -31,7 +31,6 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
-  <scripts name="scripts"/>
   <fonts name="fonts">
     <font>fonts\fRegular</font>
     <font>fonts\fRooms</font>
