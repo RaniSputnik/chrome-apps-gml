@@ -420,6 +420,32 @@
             <arg>1</arg>
           </args>
         </function>
+        <function>
+          <name>chrome_window_set_size</name>
+          <externalName>ChromeWindowSetSize</externalName>
+          <kind>11</kind>
+          <help>chrome_window_set_size(window,w,h)</help>
+          <returnType>2</returnType>
+          <argCount>3</argCount>
+          <args>
+            <arg>1</arg>
+            <arg>2</arg>
+            <arg>2</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_set_pos</name>
+          <externalName>ChromeWindowSetPos</externalName>
+          <kind>11</kind>
+          <help>chrome_window_set_pos(window,left,top)</help>
+          <returnType>2</returnType>
+          <argCount>3</argCount>
+          <args>
+            <arg>1</arg>
+            <arg>2</arg>
+            <arg>2</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>

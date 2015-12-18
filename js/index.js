@@ -74,3 +74,5 @@ ext('ChromeWindowFocus', e.win.focus);
 ext('ChromeWindowClose', e.win.close);
 ext('ChromeWindowShow', e.win.show);
 ext('ChromeWindowHide', e.win.hide);
+ext('ChromeWindowSetPos', e.win.setPos);
+ext('ChromeWindowSetSize', e.win.setSize);

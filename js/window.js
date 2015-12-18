@@ -36,6 +36,32 @@ module.exports = {
 
 	hide: function(id){
 		doWinCommand(id, 'hide');
+	},
+
+	// Sets the position of the window
+	setPos: function(id){
+		var w = chrome.app.window.get(id);
+		if (w) {
+			w.outerBounds.left = w;
+			w.outerBounds.top = h;
+		} else {
+			errorNoWindowWithId(id, 'setSize');
+		}
+	},
+
+	// Sets the size of the window with the given id
+	setSize: function(id, w, h){
+		var w = chrome.app.window.get(id);
+		if (w) {
+			w.innerBounds.width = w;
+			w.innerBounds.height = h;
+		} else {
+			errorNoWindowWithId(id, 'setSize');
+		}
+	},
+
+	setRect: function(id, x,y, w,h){
+
 	}
 };
 
@@ -47,6 +73,11 @@ function doWinCommand(id, command, args){
 	if (w) {
 		return w[command].apply(w, args);
 	} else {
-		console.error(command+" failed, no window with the id '"+id+"' was found.");
+		errorNoWindowWithId(id, command);
 	}
+}
+
+// Reports that there was no 
+function errorNoWindowWithId(id, command){
+	console.error(command+" failed, no window with the id '"+id+"' was found.");
 }
