@@ -387,6 +387,39 @@
             <arg>1</arg>
           </args>
         </function>
+        <function>
+          <name>chrome_window_fullscreen</name>
+          <externalName>ChromeWindowFullscreen</externalName>
+          <kind>11</kind>
+          <help>chrome_window_fullscreen(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_is_fullscreen</name>
+          <externalName>ChromeWindowIsFullscreen</externalName>
+          <kind>11</kind>
+          <help>chrome_window_is_fullscreen(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_restore</name>
+          <externalName>ChromeWindowRestore</externalName>
+          <kind>11</kind>
+          <help>chrome_window_restore(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>

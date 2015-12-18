@@ -4,23 +4,38 @@ module.exports = {
 		return chrome.app.window.current().id;
 	},
 
+	// Fullscreens the window with the given id
+	fullscreen: function(id){
+		doWinCommand(id, 'fullscreen');
+	},
+
+	// Returns whether or not the window with the given id is currently fullscreen
+	isFullscreen: function(id){
+		return doWinCommand(id, 'isFullscreen');
+	},
+
+	// Restores the window back to a non-fullscreen, non-minimised/maximised state
+	restore: function(id){
+		doWinCommand(id, 'restore');
+	},
+
 	// Focuses a window with the given id
 	focus: function(id){
-		return doWinCommand(id, 'focus');
+		doWinCommand(id, 'focus');
 	},
 
 	// Closes a window with the given id
 	close: function(id){
-		return doWinCommand(id, 'close');
+		doWinCommand(id, 'close');
 	},
 
 	// Shows a window with the given id
 	show: function(id){
-		return doWinCommand(id, 'show');
+		doWinCommand(id, 'show');
 	},
 
 	hide: function(id){
-		return doWinCommand(id, 'hide');
+		doWinCommand(id, 'hide');
 	}
 };
 
@@ -30,9 +45,8 @@ module.exports = {
 function doWinCommand(id, command, args){
 	var w = chrome.app.window.get(id);
 	if (w) {
-		w[command].apply(w, args);
-		return 1;
+		return w[command].apply(w, args);
 	} else {
-		return 0;
+		console.error(command+" failed, no window with the id '"+id+"' was found.");
 	}
 }

@@ -58,6 +58,8 @@
       <object>objects\oButtonConsume</object>
     </objects>
     <objects name="Window">
+      <object>objects\oButtonWinFullscreen</object>
+      <object>objects\oButtonWinRestore</object>
       <object>objects\oButtonWinClose</object>
       <object>objects\oButtonWinHide</object>
     </objects>
