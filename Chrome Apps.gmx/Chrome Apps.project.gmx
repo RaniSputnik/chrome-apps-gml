@@ -60,6 +60,8 @@
     <objects name="Window">
       <object>objects\oTestWindow</object>
       <object>objects\oButtonWinFullscreen</object>
+      <object>objects\oButtonWinMinimize</object>
+      <object>objects\oButtonWinMaximize</object>
       <object>objects\oButtonWinRestore</object>
       <object>objects\oButtonWinClose</object>
       <object>objects\oButtonWinHide</object>

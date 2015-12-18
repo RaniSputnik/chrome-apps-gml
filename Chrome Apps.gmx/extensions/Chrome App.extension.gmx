@@ -446,6 +446,50 @@
             <arg>2</arg>
           </args>
         </function>
+        <function>
+          <name>chrome_window_minimize</name>
+          <externalName>ChromeWindowMinimize</externalName>
+          <kind>11</kind>
+          <help>chrome_window_minimize(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_is_minimized</name>
+          <externalName>ChromeWindowIsMinimized</externalName>
+          <kind>11</kind>
+          <help>chrome_window_is_minimized(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_maximize</name>
+          <externalName>ChromeWindowMaximize</externalName>
+          <kind>11</kind>
+          <help>chrome_window_maximize(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_is_maximized</name>
+          <externalName>ChromeWindowIsMaximized</externalName>
+          <kind>11</kind>
+          <help>chrome_window_is_maximized(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>

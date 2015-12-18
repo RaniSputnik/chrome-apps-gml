@@ -14,6 +14,26 @@ module.exports = {
 		return doWinCommand(id, 'isFullscreen');
 	},
 
+	// Minimizes the window with the given id
+	minimize: function(id){
+		doWinCommand(id, 'minimize');
+	},
+
+	// Returns whether or not the window with the given id is minimized
+	isMinimized: function(id){
+		return doWinCommand(id, 'isMinimized');
+	},
+
+	// Maximizes the window with the given id
+	maximize: function(id){
+		doWinCommand(id, 'maximize');
+	},
+
+	// Returns whether or not the window with the given id is maximized
+	isMaximized: function(id){
+		return doWinCommand(id, 'isMaximized');
+	},
+
 	// Restores the window back to a non-fullscreen, non-minimised/maximised state
 	restore: function(id){
 		doWinCommand(id, 'restore');
