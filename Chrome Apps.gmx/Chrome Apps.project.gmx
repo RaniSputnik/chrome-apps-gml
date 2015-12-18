@@ -31,6 +31,7 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts"/>
   <fonts name="fonts">
     <font>fonts\fRegular</font>
     <font>fonts\fRooms</font>
@@ -56,12 +57,17 @@
       <object>objects\oButtonBuy</object>
       <object>objects\oButtonConsume</object>
     </objects>
+    <objects name="Window">
+      <object>objects\oButtonWinClose</object>
+      <object>objects\oButtonWinHide</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmRuntime</room>
     <room>rooms\rmStorage</room>
     <room>rooms\rmLicense</room>
     <room>rooms\rmProducts</room>
+    <room>rooms\rmWindow</room>
   </rooms>
   <constants number="2">
     <constant name="NEAR_BLACK">$212121</constant>

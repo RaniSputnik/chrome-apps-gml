@@ -13,7 +13,8 @@ var e = {
 	storage: require('./storage'),
 	i18n: require('./i18n'),
 	license: require('./license'),
-	inapp: require('./inapp')
+	inapp: require('./inapp'),
+	win: require('./window')
 };
 
 // Whether or not we are currently running as a Chrome App.
@@ -65,3 +66,8 @@ ext('ChromeInAppPriceRegion', e.inapp.priceRegion);
 ext('ChromeInAppBuy', e.inapp.buy);
 ext('ChromeInAppGetPurchases', e.inapp.getPurchases);
 ext('ChromeInAppConsume', e.inapp.consume);
+ext('ChromeWindowGetCurrent', e.win.getCurrent);
+ext('ChromeWindowFocus', e.win.focus);
+ext('ChromeWindowClose', e.win.close);
+ext('ChromeWindowShow', e.win.show);
+ext('ChromeWindowHide', e.win.hide);

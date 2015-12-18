@@ -334,6 +334,59 @@
             <arg>2</arg>
           </args>
         </function>
+        <function>
+          <name>chrome_window_get_current</name>
+          <externalName>ChromeWindowGetCurrent</externalName>
+          <kind>11</kind>
+          <help>chrome_window_get_current()</help>
+          <returnType>1</returnType>
+          <argCount>0</argCount>
+          <args/>
+        </function>
+        <function>
+          <name>chrome_window_focus</name>
+          <externalName>ChromeWindowFocus</externalName>
+          <kind>11</kind>
+          <help>chrome_window_focus(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_close</name>
+          <externalName>ChromeWindowClose</externalName>
+          <kind>11</kind>
+          <help>chrome_window_close(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_show</name>
+          <externalName>ChromeWindowShow</externalName>
+          <kind>11</kind>
+          <help>chrome_window_show(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
+        <function>
+          <name>chrome_window_hide</name>
+          <externalName>ChromeWindowHide</externalName>
+          <kind>11</kind>
+          <help>chrome_window_hide(window)</help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>1</arg>
+          </args>
+        </function>
       </functions>
       <constants>
         <constant>
